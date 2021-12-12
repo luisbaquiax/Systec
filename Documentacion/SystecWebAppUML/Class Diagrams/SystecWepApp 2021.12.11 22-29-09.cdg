@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SystecWepApp">
+  <ClassDiagramComponents>
+    <Class name="ConeccionDB" package="com.systecwepapp.dataBase" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="USER" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="PASSWORD" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="URL" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="conexionSingleton" type="ConeccionDB" visibility="private" isStatic="true"/>
+        <Field name="CONECCION" type="Connection" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
+        <Method name="getConeccion" returnType="Connection" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="PRUEBAS" package="com.systecwepapp.dataBase.modelo" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="FacturaDB" package="com.systecwepapp.dataBase.modelo" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="INSERT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="SELECT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="agregarProductoFactura" returnType="void" visibility="public">
+          <Argument type="Factura" name="factura"/>
+        </Method>
+        <Method name="getFacturaProductos" returnType="List&lt;Factura&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="InventarioDB" package="com.systecwepapp.dataBase.modelo" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="INSERT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="UPDATE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="DELETE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="SELECT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="agregarAlInvetario" returnType="void" visibility="public">
+          <Argument type="Inventario" name="inventario"/>
+        </Method>
+        <Method name="actualizarInventario" returnType="void" visibility="public">
+          <Argument type="Inventario" name="inventario"/>
+        </Method>
+        <Method name="eliminarDelInventario" returnType="void" visibility="public">
+          <Argument type="String" name="codigo"/>
+        </Method>
+        <Method name="getInventarioProducts" returnType="List&lt;Inventario&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="VentaDB" package="com.systecwepapp.dataBase.modelo" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="INSERT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="ULTIMO" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="VENTAS" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="agregarVenta" returnType="void" visibility="public"/>
+        <Method name="getUltimaVentaIngresado" returnType="int" visibility="public"/>
+        <Method name="getVentas" returnType="List&lt;Venta&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ProductoDB" package="com.systecwepapp.dataBase.modelo" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="INSERT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="UPDATE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="DELETE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="SELECT" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="TODOS_PRODUCTOS" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="ONLY_PRODUCT_EXISTENTE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="agregarProducto" returnType="void" visibility="public">
+          <Argument type="Producto" name="producto"/>
+        </Method>
+        <Method name="actualizarProducto" returnType="void" visibility="public">
+          <Argument type="Producto" name="producto"/>
+        </Method>
+        <Method name="eliminarProducto" returnType="void" visibility="public">
+          <Argument type="String" name="codigo"/>
+        </Method>
+        <Method name="getProductosTodaInformacion" returnType="List&lt;Producto&gt;" visibility="public"/>
+        <Method name="getProductoTodaInformacion" returnType="Producto" visibility="public">
+          <Argument type="String" name="codigoProducto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Venta" package="com.systecwepapp.entidad" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Factura" package="com.systecwepapp.entidad" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="idVenta" type="int" visibility="private"/>
+        <Field name="fecha" type="String" visibility="private"/>
+        <Field name="totalPago" type="double" visibility="private"/>
+        <Field name="precioUnitario" type="double" visibility="private"/>
+        <Field name="cantidadProductos" type="int" visibility="private"/>
+        <Field name="codigoProducto" type="String" visibility="private"/>
+        <Field name="usuario" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="int" name="idVenta"/>
+          <Argument type="String" name="fecha"/>
+          <Argument type="double" name="totalPago"/>
+          <Argument type="int" name="cantidadProductos"/>
+          <Argument type="String" name="codigoProducto"/>
+          <Argument type="String" name="usuario"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="int" name="idVenta"/>
+          <Argument type="String" name="fecha"/>
+          <Argument type="double" name="totalPago"/>
+          <Argument type="int" name="cantidadProductos"/>
+          <Argument type="String" name="codigoProducto"/>
+          <Argument type="String" name="usuario"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="fecha"/>
+          <Argument type="double" name="totalPago"/>
+          <Argument type="double" name="precioUnitario"/>
+          <Argument type="int" name="cantidadProductos"/>
+          <Argument type="String" name="codigoProducto"/>
+          <Argument type="String" name="usuario"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="getIdVenta" returnType="int" visibility="public"/>
+        <Method name="setIdVenta" returnType="void" visibility="public">
+          <Argument type="int" name="idVenta"/>
+        </Method>
+        <Method name="getFecha" returnType="String" visibility="public"/>
+        <Method name="setFecha" returnType="void" visibility="public">
+          <Argument type="String" name="fecha"/>
+        </Method>
+        <Method name="getTotalPago" returnType="double" visibility="public"/>
+        <Method name="setTotalPago" returnType="void" visibility="public">
+          <Argument type="double" name="totalPago"/>
+        </Method>
+        <Method name="getCantidadProductos" returnType="int" visibility="public"/>
+        <Method name="setCantidadProductos" returnType="void" visibility="public">
+          <Argument type="int" name="cantidadProductos"/>
+        </Method>
+        <Method name="getCodigoProducto" returnType="String" visibility="public"/>
+        <Method name="setCodigoProducto" returnType="void" visibility="public">
+          <Argument type="String" name="codigoProducto"/>
+        </Method>
+        <Method name="getUsuario" returnType="String" visibility="public"/>
+        <Method name="getPrecioUnitario" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Producto" package="com.systecwepapp.entidad" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="codigo" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="tipo" type="String" visibility="private"/>
+        <Field name="precioUnitario" type="double" visibility="private"/>
+        <Field name="cantidadExistente" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="tipo"/>
+          <Argument type="double" name="precioUnitario"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="tipo"/>
+          <Argument type="double" name="precioUnitario"/>
+          <Argument type="int" name="cantidadExistente"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="getCantidadExistente" returnType="int" visibility="public"/>
+        <Method name="setCantidadExistente" returnType="void" visibility="public">
+          <Argument type="int" name="cantidadExistente"/>
+        </Method>
+        <Method name="getCodigo" returnType="String" visibility="public"/>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="getTipo" returnType="String" visibility="public"/>
+        <Method name="getPrecioUnitario" returnType="double" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Usuario" package="com.systecwepapp.entidad" visibility="public" xPosition="340.0" yPosition="191.0">
+      <Fields>
+        <Field name="codigo" type="String" visibility="private"/>
+        <Field name="pass" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="pass"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCodigo" returnType="String" visibility="public"/>
+        <Method name="getPass" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FacturaImprimble" package="com.systecwepapp.entidad" visibility="public" xPosition="620.0" yPosition="335.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Inventario" package="com.systecwepapp.entidad" visibility="public" xPosition="816.0" yPosition="669.0">
+      <Fields>
+        <Field name="codigoProducto" type="String" visibility="private"/>
+        <Field name="cantidadExistente" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigoProducto"/>
+          <Argument type="int" name="cantidadExistente"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCodigoProducto" returnType="String" visibility="public"/>
+        <Method name="setCodigoProducto" returnType="void" visibility="public">
+          <Argument type="String" name="codigoProducto"/>
+        </Method>
+        <Method name="getCantidadExistente" returnType="int" visibility="public"/>
+        <Method name="setCantidadExistente" returnType="void" visibility="public">
+          <Argument type="int" name="cantidadExistente"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ControlVentas" package="com.systecwepapp.servleteControlador" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="productoDB" type="ProductoDB" visibility="private"/>
+        <Field name="ventaDB" type="VentaDB" visibility="private"/>
+        <Field name="facturaDB" type="FacturaDB" visibility="private"/>
+        <Field name="inventarioDB" type="InventarioDB" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="doGet" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="doPost" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="redirigirHacerNuevaVenta" returnType="void" visibility="private">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="agregarProductoAlaFactura" returnType="void" visibility="private">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="productoBuscado" returnType="Producto" visibility="private">
+          <Argument type="String" name="codigo"/>
+          <Argument type="List&lt;Producto&gt;" name="products"/>
+        </Method>
+        <Method name="agregarAlaFactura" returnType="void" visibility="private">
+          <Argument type="Producto" name="producto"/>
+          <Argument type="int" name="cantidad"/>
+          <Argument type="List&lt;Factura&gt;" name="produFacturas"/>
+        </Method>
+        <Method name="yaExisteEnFactura" returnType="boolean" visibility="private">
+          <Argument type="String" name="codigo"/>
+          <Argument type="List&lt;Factura&gt;" name="produFacturas"/>
+        </Method>
+        <Method name="totalAPagar" returnType="double" visibility="private">
+          <Argument type="List&lt;Factura&gt;" name="productsFacturas"/>
+        </Method>
+        <Method name="aunExisteProductosDB" returnType="boolean" visibility="private">
+          <Argument type="Producto" name="producto"/>
+          <Argument type="List&lt;Producto&gt;" name="productosDb"/>
+        </Method>
+        <Method name="realizarVenta" returnType="void" visibility="private">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="verVentas" returnType="void" visibility="private">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ControlProductos" package="com.systecwepapp.servleteControlador" visibility="public" xPosition="1304.0" yPosition="944.0">
+      <Fields>
+        <Field name="productoDB" type="ProductoDB" visibility="private"/>
+        <Field name="inventarioDB" type="InventarioDB" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="doGet" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="doPost" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="redirigirAProductos" returnType="void" visibility="private">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="crearNuevoProducto" returnType="void" visibility="private">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="com.systecwepapp.dataBase.modelo.InventarioDB" target="com.systecwepapp.entidad.Inventario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="productoDB" source="com.systecwepapp.servleteControlador.ControlProductos" target="com.systecwepapp.dataBase.modelo.ProductoDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexionSingleton" source="com.systecwepapp.dataBase.ConeccionDB" target="com.systecwepapp.dataBase.ConeccionDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ventaDB" source="com.systecwepapp.servleteControlador.ControlVentas" target="com.systecwepapp.dataBase.modelo.VentaDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.systecwepapp.dataBase.modelo.VentaDB" target="com.systecwepapp.entidad.Venta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="inventarioDB" source="com.systecwepapp.servleteControlador.ControlVentas" target="com.systecwepapp.dataBase.modelo.InventarioDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.systecwepapp.servleteControlador.ControlVentas" target="com.systecwepapp.entidad.Producto" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="inventarioDB" source="com.systecwepapp.servleteControlador.ControlProductos" target="com.systecwepapp.dataBase.modelo.InventarioDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="productoDB" source="com.systecwepapp.servleteControlador.ControlVentas" target="com.systecwepapp.dataBase.modelo.ProductoDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="facturaDB" source="com.systecwepapp.servleteControlador.ControlVentas" target="com.systecwepapp.dataBase.modelo.FacturaDB" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.systecwepapp.dataBase.modelo.FacturaDB" target="com.systecwepapp.entidad.Factura" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.systecwepapp.servleteControlador.ControlVentas" target="com.systecwepapp.entidad.Factura" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.systecwepapp.dataBase.modelo.ProductoDB" target="com.systecwepapp.entidad.Producto" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
