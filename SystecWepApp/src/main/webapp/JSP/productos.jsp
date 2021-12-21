@@ -60,6 +60,7 @@
                 <div class="card-body">
                     <div class="card-header">
                         <h2 class="text-center">Lista de productos</h2>
+                        <h3 class="text-danger text-center">${msje}</h3>
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-dark">
@@ -79,7 +80,32 @@
                                     <td>${producto.codigo}</td>
                                     <td>${producto.nombre}</td>
                                     <td><fmt:formatNumber value="${producto.precioUnitario}" type="currency"/></td>
-                                    <td>${producto.cantidadExistente}</td>
+                                    <c:if test="${producto.cantidadExistente > 0}" >
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=aumentarProducto&codigo=${producto.codigo}"
+                                               class="btn btn-success">
+                                                <i class="fas fa-angle-up"></i> 
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=disminuirProducto&codigo=${producto.codigo}"
+                                               class="btn btn-danger mr-3">
+                                                <i class="fas fa-angle-down"></i> 
+                                            </a>
+                                            ${producto.cantidadExistente}
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${producto.cantidadExistente <=0}">
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=aumentarProducto&codigo=${producto.codigo}"
+                                               class="btn btn-success">
+                                                <i class="fas fa-angle-up"></i> 
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=disminuirProducto&codigo=${producto.codigo}"
+                                               class="btn btn-danger mr-3">
+                                                <i class="fas fa-angle-down"></i>
+                                            </a>
+                                            Agotado
+                                        </td>
+                                    </c:if>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ControlProductos?tarea=editProduct&codigo=${producto.codigo}"
                                            class="btn btn-warning">
@@ -98,3 +124,9 @@
 
     </body>
 </html>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
+    }
+%>

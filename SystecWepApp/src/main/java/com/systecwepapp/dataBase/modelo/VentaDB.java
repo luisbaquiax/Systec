@@ -5,7 +5,6 @@
  */
 package com.systecwepapp.dataBase.modelo;
 
-import com.sun.org.apache.xpath.internal.Arg;
 import com.systecwepapp.dataBase.ConeccionDB;
 import com.systecwepapp.entidad.Venta;
 import java.sql.*;
@@ -20,7 +19,7 @@ public class VentaDB {
 
     private static final String INSERT = "INSERT INTO venta VALUES()";
     private static final String ULTIMO = "SELECT MAX(id) AS ultimo FROM venta";
-    private static final String VENTAS = "SELECT * FROM systec.venta ORDER BY id DESC";
+    private static final String VENTAS = "SELECT * FROM venta ORDER BY id DESC";
 
     public void agregarVenta() {
         Connection coneccion = null;
@@ -34,6 +33,10 @@ public class VentaDB {
         }
     }
 
+    /**
+     *
+     * @return ID de la última venta ingresado
+     */
     public int getUltimaVentaIngresado() {
         Connection coneccion = null;
         PreparedStatement preS = null;
@@ -54,6 +57,7 @@ public class VentaDB {
     }
 
     /**
+     * SELECT * FROM venta ORDER BY id DESC
      *
      * @return
      */

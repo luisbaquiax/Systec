@@ -41,3 +41,6 @@ CREATE TABLE IF NOT EXISTS factura(
     FOREIGN KEY(usuario) REFERENCES usuario(codigo),
     FOREIGN KEY(id_venta) REFERENCES venta(id)
 );
+
+USE systec;
+INSERT INTO usuario(codigo, password) VALUES('user', 'user');

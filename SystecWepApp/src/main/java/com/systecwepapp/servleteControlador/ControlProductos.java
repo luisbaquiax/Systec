@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,8 +54,18 @@ public class ControlProductos extends HttpServlet {
             case "productos":
                 redirigirAProductos(request, response);
                 break;
+            case "editProduct":
+                redirigirEditarProducto(request, response);
+                break;
+            case "aumentarProducto":
+                aumentarPrducto(request, response);
+                break;
+            case "disminuirProducto":
+                disminuirProducto(request, response);
+                break;
             default:
         }
+
     }
 
     /**
@@ -71,6 +83,9 @@ public class ControlProductos extends HttpServlet {
         switch (tarea) {
             case "nuevoProducto":
                 crearNuevoProducto(request, response);
+                break;
+            case "editarProducto":
+                editarProducto(request, response);
                 break;
             default:
         }
@@ -96,5 +111,49 @@ public class ControlProductos extends HttpServlet {
         List<Producto> listaProducts = this.productoDB.getProductosTodaInformacion();
         request.getSession().setAttribute("productos", listaProducts);
         response.sendRedirect(request.getContextPath() + "/JSP/productos.jsp");
+    }
+
+    private void redirigirEditarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String codigo = request.getParameter("codigo");
+        Producto buscado = this.productoDB.getProducto(codigo);
+
+        request.getSession().setAttribute("producto", buscado);
+        response.sendRedirect(request.getContextPath() + "/JSP/edicionProducto.jsp");
+    }
+
+    private void aumentarPrducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String codigo = request.getParameter("codigo");
+        Producto buscado = this.productoDB.getProducto(codigo);
+        this.inventarioDB.actualizarInventario(new Inventario(buscado.getCodigo(), buscado.getCantidadExistente() + 1));
+        redirigirAProductos(request, response);
+    }
+
+    private void disminuirProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String codigo = request.getParameter("codigo");
+        Producto buscado = this.productoDB.getProducto(codigo);
+        if (buscado.getCantidadExistente() <= 0) {
+            System.out.println("Ya no se puede disminuir.");
+            request.setAttribute("msje", "Ya no se puede disminuir más.");
+            request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
+        } else {
+            this.inventarioDB.actualizarInventario(new Inventario(buscado.getCodigo(), buscado.getCantidadExistente() - 1));
+            redirigirAProductos(request, response);
+
+        }
+    }
+
+    private void editarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int cantidadDeExistencia = Integer.parseInt(request.getParameter("cantidadExistente"));
+        String codigoProducto = request.getParameter("codigo");
+        String nombre = request.getParameter("nombre");
+        double precio = Double.parseDouble(request.getParameter("precioUnitario"));
+        this.productoDB.actualizarProducto(
+                new Producto(
+                        codigoProducto,
+                        nombre,
+                        "",
+                        precio));
+        this.inventarioDB.actualizarInventario(new Inventario(codigoProducto, cantidadDeExistencia));
+        redirigirAProductos(request, response);
     }
 }

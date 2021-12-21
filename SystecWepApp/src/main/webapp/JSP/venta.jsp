@@ -19,6 +19,8 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/6d0db64a1f.js" crossorigin="anonymous"></script>
+        <!-- Iconos -->
+        <script src="https://kit.fontawesome.com/6d0db64a1f.js" crossorigin="anonymous"></script>
         <title>Nueva venta</title>
     </head>
     <body>
@@ -34,6 +36,7 @@
                                     <div class="col col-md-3">
                                         <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-plus"></i> Agregar Producto</button>
                                     </div>
+                                    <h2 class="mt-3">${msjeVenta}</h2>
                                 </div>
                                 <div class="row g-3 mt-1">
                                     <div class="col">
@@ -41,8 +44,8 @@
                                         <input name="codigoProducto" required="" class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Búsque el producto...">
                                         <datalist id="datalistOptions">
                                             <c:forEach items="${productos}" var="producto">
-                                                <option value="${producto.codigo}">
-                                                </c:forEach>
+                                                <option value="${producto.codigo}"/>
+                                            </c:forEach>
                                         </datalist>
                                     </div>
                                     <div class="col">
@@ -54,8 +57,7 @@
                             </form>
                         </div>
                     </section>
-                    <a href="${pageContext.request.contextPath}/ControlVentas?tarea=realizarVenta" 
-                       class="btn btn-primary btn-block w-100" >Realizar Venta</a>
+
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
@@ -66,6 +68,7 @@
                                 <th scope="col">Costo Unitario</th>
                                 <th scope="col">Cantidad</th>
                                 <th scope="col">Total parcial</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,6 +79,10 @@
                                     <td><fmt:formatNumber value="${factura.precioUnitario}" type="currency"/></td>
                                     <td>${factura.cantidadProductos}</td>
                                     <td><fmt:formatNumber value="${factura.totalPago}" type="currency"/></td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/ControlVentas?tarea=quitarProducto&codigo=${factura.codigoProducto}" 
+                                           class="btn btn-danger btn-block w-100" ><i class="fas fa-trash-alt"></i> Quitar</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
 
@@ -85,8 +92,13 @@
                                 <td></td>
                                 <td><b>Total a pagar:</b></td>
                                 <td><b><fmt:formatNumber value="${total}" type="currency"/></b></td>
+                                <td></td>
                             </tr>
                     </table>
+                </div>
+                <div class="card car-footer">
+                    <a href="${pageContext.request.contextPath}/ControlVentas?tarea=realizarVenta" 
+                       class="btn btn-warning btn-block w-100" >Finalizar Venta</a>
                 </div>
             </div>
         </div>
@@ -95,3 +107,9 @@
 
     </body>
 </html>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
+    }
+%>

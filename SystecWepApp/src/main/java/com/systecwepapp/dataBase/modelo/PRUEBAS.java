@@ -25,8 +25,9 @@ public class PRUEBAS {
             ConeccionDB.getConeccion();
             ProductoDB productoDB = new ProductoDB();
             VentaDB ventaDB = new VentaDB();
+            UsuarioDB usuarioDB = new UsuarioDB();
+            System.out.println(usuarioDB.buscarUsuario("user", "user").toString());
             System.out.println(productoDB.getProductoTodaInformacion("HUAWEI-Y5-2019").toString());
-            System.out.println("ultimo " +ventaDB.getUltimaVentaIngresado());
         } catch (SQLException ex) {
             Logger.getLogger(PRUEBAS.class.getName()).log(Level.SEVERE, null, ex);
         }

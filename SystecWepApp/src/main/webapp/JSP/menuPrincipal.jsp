@@ -30,6 +30,7 @@
                     font-size: 3.5rem;
                 }
             }
+         
         </style>
         <!-- Custom styles for this template -->
         <link href="../assets/css/nabar.css" rel="stylesheet">
@@ -39,7 +40,34 @@
     </head>
     <body>
         <jsp:include page="navegador.jsp"></jsp:include>
+            <!-- 
+            <div class="container mt-5 py-5 text-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="text-center">Menu</h1>
+                        </div>
+                        <div class="card-body">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item mt-3 mb-4">
+                                    <a class="nav-link btn btn-warning btn-block w-100" aria-current="page" href="${pageContext.request.contextPath}/ControlVentas?tarea=nuevaVenta">Nueva venta</a>
+                            </li>
+                            <li class="nav-item mb-4 mt-3">
+                                <a class="nav-link btn btn-warning btn-block w-100" href="${pageContext.request.contextPath}/ControlVentas?tarea=ventas">Ventas</a>
+                            </li>
+                            <li class="nav-item mt-3">
+                                <a class="nav-link btn btn-warning btn-block w-100" href="${pageContext.request.contextPath}/ControlProductos?tarea=productos">Productos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="../assets/js/sidebars.js"></script>
     </body>
 </html>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
+    }
+%>

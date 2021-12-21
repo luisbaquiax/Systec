@@ -160,4 +160,8 @@ public class Factura {
         return precioUnitario;
     }
 
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
 }

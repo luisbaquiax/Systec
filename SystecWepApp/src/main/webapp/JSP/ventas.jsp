@@ -14,7 +14,8 @@
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+        <!-- Iconos -->
+        <script src="https://kit.fontawesome.com/6d0db64a1f.js" crossorigin="anonymous"></script>
         <title>Ventas</title>
     </head>
     <body>
@@ -40,8 +41,8 @@
                                     <td>${venta.id}</td>
                                     <td> 
                                         <a href="${pageContext.request.contextPath}/ControlVentas?tarea=verDetalleVenta&id=${venta.id}"
-                                           class="btn btn-secondary">
-                                            <i class="fas fa-angle-double-right"></i> Editar
+                                           class="btn btn-warning">
+                                            <i class="fas fa-chevron-double-down"></i> Ver detalle
                                         </a>
                                     </td>
                                 </tr>
@@ -55,3 +56,9 @@
 
     </body>
 </html>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
+    }
+%>
