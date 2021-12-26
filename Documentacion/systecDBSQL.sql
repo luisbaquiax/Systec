@@ -20,11 +20,11 @@ CREATE TABLE IF NOT EXISTS inventario(
     codigo_producto VARCHAR(45) NOT NULL,
     cantidad_existente INT NOT NULL,
     PRIMARY KEY (codigo_producto),
-    FOREIGN KEY(codigo_producto) REFERENCES producto(codigo)
+    FOREIGN KEY(codigo_producto) REFERENCES producto(codigo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS venta(
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(id)
 );
 
@@ -37,10 +37,10 @@ CREATE TABLE IF NOT EXISTS factura(
     usuario VARCHAR(45) NOT NULL,
     id_venta INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(codigo_producto) REFERENCES producto(codigo),
-    FOREIGN KEY(usuario) REFERENCES usuario(codigo),
-    FOREIGN KEY(id_venta) REFERENCES venta(id)
+    FOREIGN KEY(codigo_producto) REFERENCES producto(codigo) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(usuario) REFERENCES usuario(codigo) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(id_venta) REFERENCES venta(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 USE systec;
-INSERT INTO usuario(codigo, password) VALUES('user', 'user');
+INSERT INTO usuario(codigo, password) VALUES('user', 'adminSystec');

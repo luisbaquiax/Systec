@@ -48,7 +48,7 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Editar Producto</h4>
+                                        <h4>Editar Producto: ${producto.codigo}</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">

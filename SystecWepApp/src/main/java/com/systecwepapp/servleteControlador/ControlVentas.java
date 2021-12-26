@@ -122,7 +122,9 @@ public class ControlVentas extends HttpServlet {
             agregarAlaFactura(request, response, buscado, cantidad, productsFacturas);
 
             if (buscado.getCantidadExistente() < (productAuxiBuscado(codigoProducto, productsFacturas).getCantidadProductos())) {
-                eliminarDeListadoFacturas(codigoProducto, productsFacturas);
+                //eliminarDeListadoFacturas(codigoProducto, productsFacturas);
+                this.productAuxiBuscado(codigoProducto, productsFacturas).setCantidadProductos(buscado.getCantidadExistente());
+                actualizaPrecioParcial(productsFacturas, buscado);
                 request.setAttribute("msjeVenta", "No existe suficientes unidades de este producto: " + codigoProducto);
                 request.getRequestDispatcher("JSP/venta.jsp").forward(request, response);
             } else {
@@ -178,6 +180,11 @@ public class ControlVentas extends HttpServlet {
                 }
             }
         }
+        actualizaPrecioParcial(produFacturas, producto);
+
+    }
+
+    private void actualizaPrecioParcial(List<Factura> produFacturas, Producto producto) {
         for (Factura produFactura : produFacturas) {
             if (producto.getCodigo().equals(produFactura.getCodigoProducto())) {
                 produFactura.setTotalPago(produFactura.getCantidadProductos() * produFactura.getPrecioUnitario());
@@ -208,7 +215,7 @@ public class ControlVentas extends HttpServlet {
             this.ventaDB.agregarVenta();
 
             int idVenta = this.ventaDB.getUltimaVentaIngresado();
-
+            System.out.println("idventa " + idVenta);
             for (Factura productsFactura : productsFacturas) {
                 productsFactura.setIdVenta(idVenta);
                 this.facturaDB.agregarProductoFactura(productsFactura);

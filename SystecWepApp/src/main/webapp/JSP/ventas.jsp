@@ -27,7 +27,7 @@
                     <div class="card-header"><h2 class="text-center py-3">Ventas</h2>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped">
+                        <table id="systecTable" class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">Identificador de la venta</th>
