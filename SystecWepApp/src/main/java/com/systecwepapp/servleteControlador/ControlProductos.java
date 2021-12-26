@@ -50,6 +50,7 @@ public class ControlProductos extends HttpServlet {
             throws ServletException, IOException {
 
         String tarea = request.getParameter("tarea");
+        limpiar(request);
         switch (tarea) {
             case "productos":
                 redirigirAProductos(request, response);
@@ -80,6 +81,7 @@ public class ControlProductos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String tarea = request.getParameter("tarea");
+        limpiar(request);
         switch (tarea) {
             case "nuevoProducto":
                 crearNuevoProducto(request, response);
@@ -94,7 +96,7 @@ public class ControlProductos extends HttpServlet {
     private void redirigirAProductos(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Producto> listaProducts = this.productoDB.getProductosTodaInformacion();
-
+        
         request.getSession().setAttribute("productos", listaProducts);
         response.sendRedirect(request.getContextPath() + "/JSP/productos.jsp");
     }
@@ -113,11 +115,9 @@ public class ControlProductos extends HttpServlet {
 
             request.setAttribute("msjeNuevoProducto", "Producto agregado correctamente!!!");
             request.setAttribute("productos", this.productoDB.getProductosTodaInformacion());
-            limpiar(request);
             request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
         } else if (nuevo.getCodigo().equalsIgnoreCase(codigo)) {
             request.setAttribute("msje", "El codigo del producto ya está en uso.");
-            limpiar(request);
             request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
         }
     }
@@ -126,7 +126,6 @@ public class ControlProductos extends HttpServlet {
         String codigo = request.getParameter("codigo");
         Producto buscado = this.productoDB.getProducto(codigo);
 
-        limpiar(request);
         request.getSession().setAttribute("producto", buscado);
         response.sendRedirect(request.getContextPath() + "/JSP/edicionProducto.jsp");
     }
@@ -135,7 +134,6 @@ public class ControlProductos extends HttpServlet {
         String codigo = request.getParameter("codigo");
         Producto buscado = this.productoDB.getProducto(codigo);
         this.inventarioDB.actualizarInventario(new Inventario(buscado.getCodigo(), buscado.getCantidadExistente() + 1));
-        limpiar(request);
         redirigirAProductos(request, response);
     }
 
@@ -143,11 +141,9 @@ public class ControlProductos extends HttpServlet {
         String codigo = request.getParameter("codigo");
         Producto buscado = this.productoDB.getProducto(codigo);
         if (buscado.getCantidadExistente() <= 0) {
-            limpiar(request);
             request.setAttribute("msje", "Ya no se puede disminuir más.");
             request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
         } else {
-            limpiar(request);
             this.inventarioDB.actualizarInventario(new Inventario(buscado.getCodigo(), buscado.getCantidadExistente() - 1));
             redirigirAProductos(request, response);
 

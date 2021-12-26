@@ -58,6 +58,7 @@ public class ControlVentas extends HttpServlet {
             throws ServletException, IOException {
 
         String tarea = request.getParameter("tarea");
+        limpiar(request);
         switch (tarea) {
             case "nuevaVenta":
                 redirigirHacerNuevaVenta(request, response);
@@ -249,8 +250,14 @@ public class ControlVentas extends HttpServlet {
         String codigo = request.getParameter("codigo");
         List<Factura> facturas = (List<Factura>) request.getSession().getAttribute("productosFactura");
         eliminarDeListadoFacturas(codigo, facturas);
-        request.getSession().setAttribute("total", totalAPagar(facturas));  
+        request.getSession().setAttribute("total", totalAPagar(facturas));
         response.sendRedirect(request.getContextPath() + "/JSP/venta.jsp");
 
+    }
+
+    private void limpiar(HttpServletRequest request) {
+        if (request.getSession().getAttribute("msjeProducto") != null) {
+            request.getSession().removeAttribute("msjeProducto");
+        }
     }
 }
