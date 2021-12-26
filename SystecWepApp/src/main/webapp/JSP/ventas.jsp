@@ -22,23 +22,20 @@
         <jsp:include page="navegador.jsp"></jsp:include>
             <div class="container mt-5">
                 <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-center">Ventas</h2>
+                    <div class="card-header"><h2 class="text-center py-3">Ventas</h2>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>#</th>
-                                    <th>Identificador de la venta</th>
+                                    <th class="text-center">Identificador de la venta</th>
                                     <th>Ver detalle</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <c:forEach var="venta" items="${ventas}" varStatus="contador" >
                                 <tr>
-                                    <th>${contador.count}</th>
-                                    <td>${venta.id}</td>
+                                    <td class="text-center">${venta.id}</td>
                                     <td> 
                                         <a href="${pageContext.request.contextPath}/ControlVentas?tarea=verDetalleVenta&id=${venta.id}"
                                            class="btn btn-warning">

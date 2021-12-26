@@ -25,9 +25,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-header">
-                            <h2 class="text-center">Detalle de la venta</h2>
-                            <hr>
-                            <h4>Fecha: ${fecha}</h4>
+                            <h2 class="text-center">
+                                <a href="${pageContext.request.contextPath}/ControlVentas?tarea=ventas" class="btn btn-primary btn-inline text-center mb-2">
+                                <i class="fas fa-arrow-circle-left"></i></a>
+                            Detalle de la venta</h2>
+                        <hr>
+                        <h4>Fecha: ${fecha}</h4>
                         <h4>Usuario: ${user.codigo}</h4>
                     </div>
                     <table class="table table-striped">

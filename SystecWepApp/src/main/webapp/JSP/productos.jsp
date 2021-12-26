@@ -61,6 +61,8 @@
                     <div class="card-header">
                         <h2 class="text-center">Lista de productos</h2>
                         <h3 class="text-danger text-center">${msje}</h3>
+                        <h3 class="text-center text-success">${msjeProducto}</h3>
+                        <h3 class="text-center text-success">${msjeNuevoProducto}</h3>
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-dark">
