@@ -122,8 +122,8 @@ public class ControlVentas extends HttpServlet {
             agregarAlaFactura(request, response, buscado, cantidad, productsFacturas);
 
             if (buscado.getCantidadExistente() < (productAuxiBuscado(codigoProducto, productsFacturas).getCantidadProductos())) {
-                //eliminarDeListadoFacturas(codigoProducto, productsFacturas);
-                this.productAuxiBuscado(codigoProducto, productsFacturas).setCantidadProductos(buscado.getCantidadExistente());
+                eliminarDeListadoFacturas(codigoProducto, productsFacturas);
+                //this.productAuxiBuscado(codigoProducto, productsFacturas).setCantidadProductos(buscado.getCantidadExistente());
                 actualizaPrecioParcial(productsFacturas, buscado);
                 request.setAttribute("msjeVenta", "No existe suficientes unidades de este producto: " + codigoProducto);
                 request.getRequestDispatcher("JSP/venta.jsp").forward(request, response);
