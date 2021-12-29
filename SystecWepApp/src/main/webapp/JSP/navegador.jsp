@@ -32,6 +32,7 @@
 </nav>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.addHeader("Pragma", "no-cache");
     if (session.getAttribute("user") == null) {
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
