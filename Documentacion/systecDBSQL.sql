@@ -44,4 +44,4 @@ CREATE TABLE IF NOT EXISTS factura(
 );
 
 USE systec;
-INSERT INTO usuario(codigo, password) VALUES('user', 'adminSystec');F
+INSERT INTO usuario(codigo, password) VALUES('user', 'adminSystec');
