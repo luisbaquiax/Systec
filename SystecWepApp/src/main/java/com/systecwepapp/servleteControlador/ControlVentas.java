@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -171,8 +172,14 @@ public class ControlVentas extends HttpServlet {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("user");
         if (!yaExisteEnFactura(producto.getCodigo(), produFacturas)) {
-            produFacturas.add(new Factura(LocalDate.now().toString(), producto.getPrecioUnitario(),
-                    producto.getPrecioUnitario(), cantidad, producto.getCodigo(), usuario.getCodigo()));
+            produFacturas.add(
+                    new Factura(
+                            LocalDate.now().toString(),
+                            producto.getPrecioUnitario(),
+                            producto.getPrecioUnitario(),
+                            cantidad,
+                            producto.getCodigo(),
+                            usuario.getCodigo()));
         } else {
             for (Factura produFactura : produFacturas) {
                 if (producto.getCodigo().equals(produFactura.getCodigoProducto())) {
@@ -242,9 +249,7 @@ public class ControlVentas extends HttpServlet {
     private void verDetalleVenta(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int idVenta = Integer.parseInt(request.getParameter("id"));
         List<Factura> productosFactura = this.facturaDB.getFacturaPorIdVenta(idVenta);
-        for (Factura factura : productosFactura) {
-            factura.setPrecioUnitario(this.productoDB.getProducto(factura.getCodigoProducto()).getPrecioUnitario());
-        }
+
         String fecha = productosFactura.get(productosFactura.size() - 1).getFecha();
 
         request.getSession().setAttribute("fecha", fecha);

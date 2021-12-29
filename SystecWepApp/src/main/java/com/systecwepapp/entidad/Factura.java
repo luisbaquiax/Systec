@@ -34,11 +34,12 @@ public class Factura {
      * @param codigoProducto
      * @param usuario
      */
-    public Factura(int id, int idVenta, String fecha, double totalPago, int cantidadProductos, String codigoProducto, String usuario) {
+    public Factura(int id, int idVenta, String fecha, double totalPago, double precioUnitario, int cantidadProductos, String codigoProducto, String usuario) {
         this.id = id;
         this.idVenta = idVenta;
         this.fecha = fecha;
         this.totalPago = totalPago;
+        this.precioUnitario = precioUnitario;
         this.cantidadProductos = cantidadProductos;
         this.codigoProducto = codigoProducto;
         this.usuario = usuario;
@@ -70,6 +71,11 @@ public class Factura {
         this.cantidadProductos = cantidadProductos;
         this.codigoProducto = codigoProducto;
         this.usuario = usuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Factura{" + "id=" + id + ", idVenta=" + idVenta + ", fecha=" + fecha + ", totalPago=" + totalPago + ", precioUnitario=" + precioUnitario + ", cantidadProductos=" + cantidadProductos + ", codigoProducto=" + codigoProducto + ", usuario=" + usuario + '}';
     }
 
     /**
