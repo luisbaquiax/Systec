@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS factura(
     id INT NOT NULL AUTO_INCREMENT,
     fecha DATE NOT NULL,
     total_pago DOUBLE NOT NULL,
+    precio_unitario DOUBLE NOT NULL,
     cantidad_productos INT NOT NULL,
     codigo_producto VARCHAR(45) NOT NULL,
     usuario VARCHAR(45) NOT NULL,
