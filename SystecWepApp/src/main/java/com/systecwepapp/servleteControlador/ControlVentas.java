@@ -14,11 +14,11 @@ import com.systecwepapp.entidad.Inventario;
 import com.systecwepapp.entidad.Producto;
 import com.systecwepapp.entidad.Usuario;
 import com.systecwepapp.entidad.Venta;
+import com.systecwepapp.reporte.ManejadorReporteVentas;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,12 +37,14 @@ public class ControlVentas extends HttpServlet {
     private VentaDB ventaDB;
     private FacturaDB facturaDB;
     private InventarioDB inventarioDB;
+    private ManejadorReporteVentas manejadorReporteVentas;
 
     public ControlVentas() {
         this.productoDB = new ProductoDB();
         this.ventaDB = new VentaDB();
         this.facturaDB = new FacturaDB();
         this.inventarioDB = new InventarioDB();
+        this.manejadorReporteVentas = new ManejadorReporteVentas();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -96,6 +98,9 @@ public class ControlVentas extends HttpServlet {
         switch (tarea) {
             case "agregarProductoFactura":
                 agregarProductoAlaFactura(request, response);
+                break;
+            case "consultaVentasFechas":
+                consultarVentasPorFecha(request, response);
                 break;
             default:
         }
@@ -242,6 +247,9 @@ public class ControlVentas extends HttpServlet {
 
     private void verVentas(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<Venta> ventas = this.ventaDB.getVentas();
+        String ruta = "reporteSystec.csv";
+        this.manejadorReporteVentas.escribirReporteCSV(ventas, ruta);
+        request.getSession().setAttribute("ruta", ruta);
         request.getSession().setAttribute("ventas", ventas);
         response.sendRedirect(request.getContextPath() + "/JSP/ventas.jsp");
     }
@@ -263,6 +271,7 @@ public class ControlVentas extends HttpServlet {
         List<Factura> facturas = (List<Factura>) request.getSession().getAttribute("productosFactura");
         eliminarDeListadoFacturas(codigo, facturas);
         request.getSession().setAttribute("total", totalAPagar(facturas));
+        request.getSession().setAttribute("msjeVenta", "Producto quitado.");
         response.sendRedirect(request.getContextPath() + "/JSP/venta.jsp");
 
     }
@@ -270,6 +279,25 @@ public class ControlVentas extends HttpServlet {
     private void limpiar(HttpServletRequest request) {
         if (request.getSession().getAttribute("msjeProducto") != null) {
             request.getSession().removeAttribute("msjeProducto");
+        }
+        if (request.getSession().getAttribute("msjeVenta") != null) {
+            request.getSession().removeAttribute("msjeVenta");
+        }
+    }
+
+    private void consultarVentasPorFecha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String fecha1 = request.getParameter("fecha1");
+            String fecha2 = request.getParameter("fecha2");
+            String ruta = "reporteSystec.csv";
+            List<Venta> ventas = this.ventaDB.getVentasPorFecha(fecha1, fecha2);
+            this.manejadorReporteVentas.escribirReporteCSV(ventas, ruta);
+            request.getSession().setAttribute("ruta", ruta);
+            request.getSession().setAttribute("ventas", ventas);
+            response.sendRedirect(request.getContextPath() + "/JSP/ventas.jsp");
+        } catch (SQLException ex) {
+            request.getSession().setAttribute("msjeVenta", "No se pudo mostrar los datos solicitados, lo sentimos.");
+            response.sendRedirect(request.getContextPath() + "/JSP/ventas.jsp");
         }
     }
 }
