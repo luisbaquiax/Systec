@@ -15,6 +15,7 @@ import com.systecwepapp.entidad.Producto;
 import com.systecwepapp.entidad.Usuario;
 import com.systecwepapp.entidad.Venta;
 import com.systecwepapp.reporte.ManejadorReporteVentas;
+import com.systecwepapp.reporte.ManejadorReporteVentasPDF;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -77,6 +78,12 @@ public class ControlVentas extends HttpServlet {
                 break;
             case "quitarProducto":
                 quitarProducto(request, response);
+                break;
+            case "descargarExcel":
+                descargarExcel(request, response);
+                break;
+            case "descargarPDF":
+                descargarReporteVentasPDF(request, response);
                 break;
             default:
         }
@@ -247,9 +254,6 @@ public class ControlVentas extends HttpServlet {
 
     private void verVentas(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<Venta> ventas = this.ventaDB.getVentas();
-        String ruta = "reporteSystec.csv";
-        this.manejadorReporteVentas.escribirReporteCSV(ventas, ruta);
-        request.getSession().setAttribute("ruta", ruta);
         request.getSession().setAttribute("ventas", ventas);
         response.sendRedirect(request.getContextPath() + "/JSP/ventas.jsp");
     }
@@ -289,15 +293,29 @@ public class ControlVentas extends HttpServlet {
         try {
             String fecha1 = request.getParameter("fecha1");
             String fecha2 = request.getParameter("fecha2");
-            String ruta = "reporteSystec.csv";
             List<Venta> ventas = this.ventaDB.getVentasPorFecha(fecha1, fecha2);
-            this.manejadorReporteVentas.escribirReporteCSV(ventas, ruta);
-            request.getSession().setAttribute("ruta", ruta);
             request.getSession().setAttribute("ventas", ventas);
             response.sendRedirect(request.getContextPath() + "/JSP/ventas.jsp");
         } catch (SQLException ex) {
             request.getSession().setAttribute("msjeVenta", "No se pudo mostrar los datos solicitados, lo sentimos.");
             response.sendRedirect(request.getContextPath() + "/JSP/ventas.jsp");
         }
+    }
+
+    private void escribirReporteExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String ruta = "reporteSystec.csv";
+        List<Venta> ventas = (List<Venta>) request.getSession().getAttribute("ventas");
+        this.manejadorReporteVentas.escribirReporteCSV(ventas, ruta);
+        request.getSession().setAttribute("ruta", ruta);
+        response.sendRedirect(request.getContextPath() + "/Descarga?ruta=" + ruta);
+    }
+
+    private void descargarExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        escribirReporteExcel(request, response);
+    }
+
+    private void descargarReporteVentasPDF(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        response.sendRedirect(request.getContextPath() + "/DescargaPDF");
     }
 }
