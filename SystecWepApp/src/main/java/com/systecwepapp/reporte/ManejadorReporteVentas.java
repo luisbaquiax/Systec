@@ -36,7 +36,6 @@ public class ManejadorReporteVentas {
     private FacturaDB facturaDB;
     private ManejadorArchivo manejadorArchivo;
 
-    
     public ManejadorReporteVentas() {
         this.ventaDB = new VentaDB();
         this.facturaDB = new FacturaDB();
