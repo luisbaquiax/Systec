@@ -5,10 +5,12 @@
  */
 package com.systecwepapp.reporte;
 
+import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -22,7 +24,10 @@ import com.systecwepapp.entidad.Venta;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
 
 /**
  *
@@ -41,9 +46,11 @@ public class ManejadorReporteVentasPDF {
     private void writeHeader(PdfPTable pdfTable) {
         PdfPCell cell = new PdfPCell();
 
+        cell.setBackgroundColor(Color.darkGray);
+        cell.setPadding(6f);
+        
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setColor(Color.BLACK);
-
+        font.setColor(Color.WHITE);
         cell.setPhrase(new Phrase("Identificador", font));
         pdfTable.addCell(cell);
         cell.setPhrase(new Phrase("Código producto", font));
@@ -88,10 +95,11 @@ public class ManejadorReporteVentasPDF {
             paragraph.setAlignment(Paragraph.ALIGN_CENTER);
             doc.add(paragraph);
 
+            agregarImagen(doc);
             PdfPTable pdfPTable = new PdfPTable(5);
             pdfPTable.setWidthPercentage(100f);
             pdfPTable.setWidths(new float[]{6.0f, 6.0f, 6.0f, 6.0f, 6.0f});
-            pdfPTable.setSpacingBefore(10);
+            pdfPTable.setSpacingBefore(30);
             writeHeader(pdfPTable);
             writeData(pdfPTable, ventas);
 
@@ -99,6 +107,20 @@ public class ManejadorReporteVentasPDF {
             doc.close();
         } catch (DocumentException | IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void agregarImagen(Document doc) {
+
+        try {
+            Image imagen = Image.getInstance("systec.png");
+            imagen.setAlignment(Image.ALIGN_LEFT);
+            imagen.setAbsolutePosition(30, 750);
+            imagen.scaleAbsoluteHeight(95f);
+            imagen.scaleAbsoluteWidth(95);
+            doc.add(imagen);
+        } catch (BadElementException | IOException ex) {
+            Logger.getLogger(ManejadorReporteVentasPDF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

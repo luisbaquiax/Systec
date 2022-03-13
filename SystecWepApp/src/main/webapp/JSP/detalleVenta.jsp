@@ -31,7 +31,7 @@
                             Detalle de la venta</h2>
                         <hr>
                         <h4>Fecha: ${fecha}</h4>
-                        <h4>Usuario: ${user.codigo}</h4>
+                        <h4>Usuario: ${userDetalle}</h4>
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-dark">

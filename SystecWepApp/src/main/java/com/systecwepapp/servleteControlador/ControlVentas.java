@@ -261,12 +261,18 @@ public class ControlVentas extends HttpServlet {
     private void verDetalleVenta(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int idVenta = Integer.parseInt(request.getParameter("id"));
         List<Factura> productosFactura = this.facturaDB.getFacturaPorIdVenta(idVenta);
+        if (productosFactura.size() > 0) {
+            String fecha = productosFactura.get(productosFactura.size() - 1).getFecha();
 
-        String fecha = productosFactura.get(productosFactura.size() - 1).getFecha();
+            request.getSession().setAttribute("fecha", fecha);
+            request.getSession().setAttribute("userDetalle", productosFactura.get(0).getUsuario());
+            request.getSession().setAttribute("total", totalAPagar(productosFactura));
+            request.getSession().setAttribute("factura", productosFactura);
+        } else {
+            request.getSession().setAttribute("total", totalAPagar(productosFactura));
+            request.getSession().setAttribute("factura", productosFactura);
+        }
 
-        request.getSession().setAttribute("fecha", fecha);
-        request.getSession().setAttribute("total", totalAPagar(productosFactura));
-        request.getSession().setAttribute("factura", productosFactura);
         response.sendRedirect("JSP/detalleVenta.jsp");
     }
 

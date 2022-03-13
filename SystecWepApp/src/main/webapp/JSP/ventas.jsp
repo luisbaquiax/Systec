@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="col col-md-8">
                                     <a class="btn btn-primary" href="${pageContext.request.contextPath}/ControlVentas?tarea=ventas">
-                                        <ion-icon name="list-outline"></ion-icon>
+                                        <i class="fas fa-list-alt"></i>
                                         Ver todo</a>
                                     <a class="btn btn-danger" href="${pageContext.request.contextPath}/ControlVentas?tarea=descargarPDF">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
@@ -83,7 +83,7 @@
                                     <td> 
                                         <a href="${pageContext.request.contextPath}/ControlVentas?tarea=verDetalleVenta&id=${venta.id}"
                                            class="btn btn-warning">
-                                            <i class="fas fa-chevron-double-down"></i> Ver detalle
+                                            <i class="fas fa-arrow-circle-down"></i> Ver detalle
                                         </a>
                                     </td>
                                 </tr>
