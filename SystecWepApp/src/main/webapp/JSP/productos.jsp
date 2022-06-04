@@ -21,7 +21,12 @@
 
         <!-- dataTables -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
-
+        <!-- ajax -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <!-- sweet alert -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- js -->
+        <script src="../resources/productos.js"></script>
         <title>Productos - Systec</title>
     </head>
     <body>
@@ -36,7 +41,7 @@
                                 <h2 class="text-center">Nuevo producto</h2>
                                 <div class="row">
                                     <div class="col col-md-8">
-                                        <button class="btn btn-primary">Guardar producto</button>
+                                        <button class="btn btn-primary" onclick="">Guardar producto</button>
                                     </div>
                                 </div>
                                 <div class="row g-12 mt-1">
