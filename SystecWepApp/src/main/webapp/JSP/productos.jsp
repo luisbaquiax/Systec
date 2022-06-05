@@ -34,14 +34,13 @@
             <div class="container mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <!-- Botones de navegación para agregar cliente-->
                         <section id="actions" class="py-4 bg-light">
                             <div class="container">
                                 <form method="POST" action="${pageContext.request.contextPath}/ControlProductos?tarea=nuevoProducto">
                                 <h2 class="text-center">Nuevo producto</h2>
                                 <div class="row">
                                     <div class="col col-md-8">
-                                        <button class="btn btn-primary" onclick="">Guardar producto</button>
+                                        <button class="btn btn-primary">Guardar producto</button>
                                     </div>
                                 </div>
                                 <div class="row g-12 mt-1">
@@ -118,16 +117,27 @@
                                         </td>
                                     </c:if>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/ControlProductos?tarea=editProduct&codigo=${producto.codigo}"
-                                           class="btn btn-warning">
+                                        <a href="#" 
+                                           class="btn btn-warning"
+                                           onclick="openEditProduct('${pageContext.request.contextPath}/ControlProductos?tarea=editProduct&codigo=${producto.codigo}')">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
                                     </td>
                                 </tr> 
                             </c:forEach>
-
-
                     </table>
+                </div>
+            </div>
+        </div>
+        <div id="modalEditProduct" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title" id="exampleModalLabel">Edicion de producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modal-content">
+                    </div>
                 </div>
             </div>
         </div>

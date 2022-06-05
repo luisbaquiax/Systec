@@ -96,7 +96,7 @@ public class ControlProductos extends HttpServlet {
     private void redirigirAProductos(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Producto> listaProducts = this.productoDB.getProductosTodaInformacion();
-        
+
         request.getSession().setAttribute("productos", listaProducts);
         response.sendRedirect(request.getContextPath() + "/JSP/productos.jsp");
     }
@@ -113,9 +113,9 @@ public class ControlProductos extends HttpServlet {
             this.productoDB.agregarProducto(new Producto(codigo, nombre, "", precio));
             this.inventarioDB.agregarAlInvetario(new Inventario(codigo, cantidadExistente));
 
-            request.setAttribute("msjeNuevoProducto", "Producto agregado correctamente!!!");
-            request.setAttribute("productos", this.productoDB.getProductosTodaInformacion());
-            request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
+            request.getSession().setAttribute("msjeNuevoProducto", "Producto agregado correctamente!!!");
+            request.getSession().setAttribute("productos", this.productoDB.getProductosTodaInformacion());
+            response.sendRedirect("JSP/productos.jsp");
         } else if (nuevo.getCodigo().equalsIgnoreCase(codigo)) {
             request.setAttribute("msje", "El codigo del producto ya está en uso.");
             request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
@@ -127,7 +127,7 @@ public class ControlProductos extends HttpServlet {
         Producto buscado = this.productoDB.getProducto(codigo);
 
         request.getSession().setAttribute("producto", buscado);
-        response.sendRedirect(request.getContextPath() + "/JSP/edicionProducto.jsp");
+        response.sendRedirect(request.getContextPath() + "/JSP/modalEditProducto.jsp");
     }
 
     private void aumentarPrducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -169,6 +169,9 @@ public class ControlProductos extends HttpServlet {
     private void limpiar(HttpServletRequest request) throws ServletException, IOException {
         if (request.getSession().getAttribute("msjeProducto") != null) {
             request.getSession().removeAttribute("msjeProducto");
+        }
+        if (request.getSession().getAttribute("msjeNuevoProducto") != null) {
+            request.getSession().removeAttribute("msjeNuevoProducto");
         }
     }
 }
