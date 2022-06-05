@@ -1,10 +1,9 @@
 function saveProduct(context) {
-    swal("Se ha guardado el producto exitosamente.");
     $.ajax({
         type: 'GET',
         url: context,
         success: function (result) {
-
+            swal("Se ha guardado el producto exitosamente.");
         }
     }).fail(function (jqXHR, textStatus, errorThrown) {
         alert("error");
