@@ -1,6 +1,6 @@
 function saveProduct(context) {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: context,
         success: function (result) {
             swal("Se ha guardado el producto exitosamente.");

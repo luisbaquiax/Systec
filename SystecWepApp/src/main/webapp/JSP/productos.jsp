@@ -40,7 +40,7 @@
                                 <h2 class="text-center">Nuevo producto</h2>
                                 <div class="row">
                                     <div class="col col-md-8">
-                                        <button class="btn btn-primary">Guardar producto</button>
+                                        <button class="btn btn-primary" >Guardar producto</button>
                                     </div>
                                 </div>
                                 <div class="row g-12 mt-1">

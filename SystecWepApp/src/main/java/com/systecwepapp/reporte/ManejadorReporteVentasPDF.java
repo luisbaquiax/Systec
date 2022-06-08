@@ -76,7 +76,7 @@ public class ManejadorReporteVentasPDF {
             pdfTable.addCell("");
             pdfTable.addCell("");
             pdfTable.addCell("");
-            pdfTable.addCell("Subtotal");
+            pdfTable.addCell("Total");
             pdfTable.addCell(manejadorReporteVentas.totalAPagar(listadoProuctos) + "");
         }
     }
