@@ -135,7 +135,7 @@ public class ControlVentas extends HttpServlet {
             agregarAlaFactura(request, response, buscado, cantidad, productsFacturas);
 
             if (buscado.getCantidadExistente() < (productAuxiBuscado(codigoProducto, productsFacturas).getCantidadProductos())) {
-                eliminarDeListadoFacturas(codigoProducto, productsFacturas, cantidad);
+                eliminarDeListadoFacturas(codigoProducto, productsFacturas);
                 //this.productAuxiBuscado(codigoProducto, productsFacturas).setCantidadProductos(buscado.getCantidadExistente());
                 actualizaPrecioParcial(productsFacturas, buscado);
                 request.setAttribute("msjeVenta", "No existe suficientes unidades de este producto: " + codigoProducto);
@@ -173,7 +173,7 @@ public class ControlVentas extends HttpServlet {
     private void eliminarDeListadoFacturas(String codigo, List<Factura> facturas, int cantidad) {
         for (Factura factura : facturas) {
             if (codigo.equals(factura.getCodigoProducto())) {
-                factura.setCantidadProductos(factura.getCantidadProductos()-cantidad);
+                factura.setCantidadProductos(factura.getCantidadProductos() - cantidad);
                 break;
             }
         }
@@ -323,5 +323,14 @@ public class ControlVentas extends HttpServlet {
     private void descargarReporteVentasPDF(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.sendRedirect(request.getContextPath() + "/DescargaPDF");
+    }
+
+    private void eliminarDeListadoFacturas(String codigo, List<Factura> facturas) {
+        for (Factura factura : facturas) {
+            if (factura.getCodigoProducto().equals(codigo)) {
+                facturas.remove(factura);
+                break;
+            }
+        }
     }
 }
