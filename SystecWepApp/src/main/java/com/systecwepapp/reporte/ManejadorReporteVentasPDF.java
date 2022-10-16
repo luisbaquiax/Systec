@@ -48,10 +48,10 @@ public class ManejadorReporteVentasPDF {
 
         cell.setBackgroundColor(Color.darkGray);
         cell.setPadding(6f);
-        
+
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         font.setColor(Color.WHITE);
-        cell.setPhrase(new Phrase("Identificador", font));
+        cell.setPhrase(new Phrase("No. Venta", font));
         pdfTable.addCell(cell);
         cell.setPhrase(new Phrase("Código producto", font));
         pdfTable.addCell(cell);
@@ -64,6 +64,7 @@ public class ManejadorReporteVentasPDF {
     }
 
     private void writeData(PdfPTable pdfTable, List<Venta> ventas) {
+        double total = 0;
         for (Venta venta : ventas) {
             List<Factura> listadoProuctos = this.facturaDB.getFacturaPorIdVenta(venta.getId());
             for (Factura listadoProucto : listadoProuctos) {
@@ -78,7 +79,13 @@ public class ManejadorReporteVentasPDF {
             pdfTable.addCell("");
             pdfTable.addCell("Total");
             pdfTable.addCell(manejadorReporteVentas.totalAPagar(listadoProuctos) + "");
+            total += manejadorReporteVentas.totalAPagar(listadoProuctos);
         }
+        pdfTable.addCell("");
+        pdfTable.addCell("");
+        pdfTable.addCell("");
+        pdfTable.addCell("Total");
+        pdfTable.addCell(total + "");
     }
 
     public void exportarPDF(HttpServletResponse response, List<Venta> ventas) {
@@ -113,7 +120,7 @@ public class ManejadorReporteVentasPDF {
     private void agregarImagen(Document doc) {
 
         try {
-            Image imagen = Image.getInstance("systec.png");
+            Image imagen = Image.getInstance(getClass().getResource("/img/systec.png"));
             imagen.setAlignment(Image.ALIGN_LEFT);
             imagen.setAbsolutePosition(30, 750);
             imagen.scaleAbsoluteHeight(95f);
