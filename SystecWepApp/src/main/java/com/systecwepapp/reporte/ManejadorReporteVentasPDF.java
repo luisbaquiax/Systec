@@ -22,11 +22,14 @@ import com.systecwepapp.dataBase.modelo.VentaDB;
 import com.systecwepapp.entidad.Factura;
 import com.systecwepapp.entidad.Venta;
 import java.awt.Color;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
 
 /**
