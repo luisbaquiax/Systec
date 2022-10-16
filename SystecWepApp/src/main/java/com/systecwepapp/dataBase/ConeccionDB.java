@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class ConeccionDB {
 
     private static final String USER = "root";
-    private static final String PASSWORD = "luisbaquiax1234";
+    private static final String PASSWORD = "123456789";
     private static final String URL = "jdbc:mysql://localhost:3306/systec?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 
     private static ConeccionDB conexionSingleton = null;
