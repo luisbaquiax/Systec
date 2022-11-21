@@ -31,24 +31,22 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="card mt-1">
-                                    <div class="card-header">
-                                        <h4>Editar Producto: ${producto.codigo}</h4>
+                                <div class="card-header">
+                                    <h4>Editar Producto: ${producto.codigo}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" name="nombre" required value="${producto.nombre}">
                                     </div>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="nombre">Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" required value="${producto.nombre}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="precioUnitario">Precio unitario (Q)</label>
-                                            <input type="number" step="0.1" class="form-control" name="precioUnitario" required 
-                                                   value="${producto.precioUnitario}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cantidadExistente">Cantidad en existencia</label>
-                                            <input type="number" class="form-control" name="cantidadExistente" required value="${producto.cantidadExistente}" min="0">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="precioUnitario">Precio unitario (Q)</label>
+                                        <input type="number" step="0.1" class="form-control" name="precioUnitario" required 
+                                               value="${producto.precioUnitario}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cantidadExistente">Cantidad en existencia</label>
+                                        <input type="number" class="form-control" name="cantidadExistente" required value="${producto.cantidadExistente}" min="0">
                                     </div>
                                 </div>
                             </div>

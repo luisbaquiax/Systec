@@ -9,6 +9,8 @@ import com.systecwepapp.dataBase.modelo.InventarioDB;
 import com.systecwepapp.dataBase.modelo.ProductoDB;
 import com.systecwepapp.entidad.Inventario;
 import com.systecwepapp.entidad.Producto;
+import com.systecwepapp.entidad.Venta;
+import com.systecwepapp.reporte.ReporteProductos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -63,6 +65,9 @@ public class ControlProductos extends HttpServlet {
                 break;
             case "disminuirProducto":
                 disminuirProducto(request, response);
+                break;
+            case "descargarProductosExcel":
+                descargarProductosExcel(request, response);
                 break;
             default:
         }
@@ -173,5 +178,15 @@ public class ControlProductos extends HttpServlet {
         if (request.getSession().getAttribute("msjeNuevoProducto") != null) {
             request.getSession().removeAttribute("msjeNuevoProducto");
         }
+    }
+
+    private void descargarProductosExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String ruta = "rutaProductos.csv";
+        List<Producto> productos = (List<Producto>) request.getSession().getAttribute("productos");
+        ReporteProductos reporteProductos = new ReporteProductos();
+        reporteProductos.escribirReporteProductosCSV(productos, ruta);
+        
+        request.getSession().setAttribute("rutaProductos", ruta);
+        response.sendRedirect(request.getContextPath() + "/DescargaListaProductosExcel?rutaProductos=" + ruta);
     }
 }

@@ -29,13 +29,10 @@
                 <div class="card">
                     <div class="card-header">
                         <!-- Botones de navegación para agregar cliente-->
-                        <section id="actions" class="py-4 mb-4 bg-light">
+                        <section id="actions" class="mb-4 bg-light">
                             <div class="container">
                                 <form method="POST" action="${pageContext.request.contextPath}/ControlVentas?tarea=agregarProductoFactura">
                                 <div class="row">
-                                    <div class="col col-md-3">
-                                        <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-plus"></i> Agregar Producto</button>
-                                    </div>
                                     <h2 class="mt-3">${msjeVenta}</h2>
                                 </div>
                                 <div class="row g-3 mt-1">
@@ -44,7 +41,7 @@
                                         <input name="codigoProducto" required="" class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Búsque el producto...">
                                         <datalist id="datalistOptions">
                                             <c:forEach items="${productos}" var="producto">
-                                                <option value="${producto.codigo}"/>
+                                                <option value="${producto.codigo}, ${producto.nombre}"/>
                                             </c:forEach>
                                         </datalist>
                                     </div>
@@ -52,6 +49,10 @@
                                         <label for="exampleDataList" class="form-label">Cantidad:</label>
                                         <input name="cantidadProducto" required="" type="number"
                                                class="form-control" placeholder="Username" value="1" min="1" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="col col-md-3">
+                                        <br>
+                                        <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-plus"></i> Agregar Producto</button>
                                     </div>
                                 </div>
                             </form>
