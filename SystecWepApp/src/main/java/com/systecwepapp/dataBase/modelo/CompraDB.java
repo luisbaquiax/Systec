@@ -20,6 +20,7 @@ public class CompraDB {
     private static final String INSERT = "INSERT INTO compra(producto,fecha,unidades) VALUES(?,?,?)";
     private static final String UPDATE = "UPDATE compra SET unidades=? WHERE producto=?";
     private static final String SELECT = "SELECT * FROM compra";
+    private static final String SELECT_BY_FECHA = "SELECT * FROM compra WHERE fecha BETWEEN ? AND ?";
     private Connection conn = null;
     private PreparedStatement statement = null;
     private ResultSet resultSet = null;
@@ -60,6 +61,33 @@ public class CompraDB {
         List<Compra> compras = new ArrayList<>();
         conn = ConeccionDB.getConeccion();
         statement = conn.prepareStatement(SELECT);
+        resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            compra = new Compra(
+                    resultSet.getInt("id"),
+                    resultSet.getString("producto"),
+                    resultSet.getString("fecha"),
+                    resultSet.getInt("unidades"));
+            compras.add(compra);
+        }
+        return compras;
+    }
+
+    /**
+     * query: SELECT * FROM compra WHERE fecha BETWEEN ? AND ?
+     *
+     * @param fecha1
+     * @param fecha2
+     * @return
+     * @throws SQLException
+     */
+    public List<Compra> getCompras(String fecha1, String fecha2) throws SQLException {
+        Compra compra = null;
+        List<Compra> compras = new ArrayList<>();
+        conn = ConeccionDB.getConeccion();
+        statement = conn.prepareStatement(SELECT_BY_FECHA);
+        statement.setString(1, fecha1);
+        statement.setString(2, fecha2);
         resultSet = statement.executeQuery();
         while (resultSet.next()) {
             compra = new Compra(

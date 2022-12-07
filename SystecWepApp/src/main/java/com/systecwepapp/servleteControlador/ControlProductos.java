@@ -171,7 +171,7 @@ public class ControlProductos extends HttpServlet {
         redirigirAProductos(request, response);
     }
 
-    private void limpiar(HttpServletRequest request) throws ServletException, IOException {
+    public void limpiar(HttpServletRequest request) throws ServletException, IOException {
         if (request.getSession().getAttribute("msjeProducto") != null) {
             request.getSession().removeAttribute("msjeProducto");
         }
@@ -189,7 +189,6 @@ public class ControlProductos extends HttpServlet {
         ReporteProductos reporteProductos = new ReporteProductos();
         reporteProductos.escribirReporteProductosCSV(productos, ruta);
         
-        request.getSession().setAttribute("rutaProductos", ruta);
         response.sendRedirect(request.getContextPath() + "/DescargaListaProductosExcel?rutaProductos=" + ruta);
     }
 }

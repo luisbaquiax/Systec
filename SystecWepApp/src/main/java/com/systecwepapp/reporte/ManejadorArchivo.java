@@ -27,7 +27,7 @@ public class ManejadorArchivo {
             bw.close();
             System.out.println("hecho");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

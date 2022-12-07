@@ -35,12 +35,17 @@
                 <div class="card">
                     <br>
                     <div class="row g-2 mt-1">
-                        <div class="col-md-3 px-4">
+                        <div class="col-md-4 ps-4">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNewProduct">
                                 <i class="fas fa-plus"></i> Nuevo producto
                             </button>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4 ps-4">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistarProducto">
+                                <i class="fas fa-list-ul"></i> Registrar productos
+                            </button>
+                        </div>
+                        <div class="col-md-3">
                             <a href="${pageContext.request.contextPath}/ControlProductos?tarea=descargarProductosExcel"
                            class="btn btn-success mr-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
@@ -49,68 +54,69 @@
                             </svg> Descargar listado en excel
                         </a>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="card-header">
-                        <h2 class="text-center">Lista de productos</h2>
-                        <h3 class="text-danger text-center">${msje}</h3>
-                        <h3 class="text-center text-success">${msjeProducto}</h3>
-                        <h3 class="text-center text-success">${msjeNuevoProducto}</h3>
-                    </div>
-                    <table id="systecTable" class="table table-striped">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Código</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Precio Unitario</th>
-                                <th scope="col">Cantidad existente</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${productos}" var="producto" varStatus="contador">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h2 class="text-center">Lista de productos</h2>
+                            <h3 class="text-danger text-center">${msje}</h3>
+                            <h3 class="text-center text-success">${msjeProducto}</h3>
+                            <h3 class="text-center text-success">${msjeNuevoProducto}</h3>
+                        </div>
+                        <table id="systecTable" class="table table-striped">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <th>${contador.count}</th>
-                                    <td>${producto.codigo}</td>
-                                    <td>${producto.nombre}</td>
-                                    <td><fmt:formatNumber value="${producto.precioUnitario}" type="currency"/></td>
-                                    <c:if test="${producto.cantidadExistente > 0}" >
+                                    <th scope="col">#</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Precio Unitario</th>
+                                    <th scope="col">Cantidad existente</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${productos}" var="producto" varStatus="contador">
+                                    <tr>
+                                        <th>${contador.count}</th>
+                                        <td>${producto.codigo}</td>
+                                        <td>${producto.nombre}</td>
+                                        <td><fmt:formatNumber value="${producto.precioUnitario}" type="currency"/></td>
+                                        <c:if test="${producto.cantidadExistente > 0}" >
+                                            <td>
+                                                ${producto.cantidadExistente}
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${producto.cantidadExistente <=0}">
+                                            <td>
+                                                Agotado
+                                            </td>
+                                        </c:if>
                                         <td>
-                                            ${producto.cantidadExistente}
+                                            <a href="#" 
+                                               class="btn btn-warning"
+                                               onclick="openEditProduct('${pageContext.request.contextPath}/ControlProductos?tarea=editProduct&codigo=${producto.codigo}')">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </a>
                                         </td>
-                                    </c:if>
-                                    <c:if test="${producto.cantidadExistente <=0}">
-                                        <td>
-                                            Agotado
-                                        </td>
-                                    </c:if>
-                                    <td>
-                                        <a href="#" 
-                                           class="btn btn-warning"
-                                           onclick="openEditProduct('${pageContext.request.contextPath}/ControlProductos?tarea=editProduct&codigo=${producto.codigo}')">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </a>
-                                    </td>
-                                </tr> 
-                            </c:forEach>
-                    </table>
+                                    </tr> 
+                                </c:forEach>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="modalEditProduct" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-warning">
-                        <h5 class="modal-title" id="exampleModalLabel">Edicion de producto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="modal-content">
+            <div id="modalEditProduct" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                            <h5 class="modal-title" id="exampleModalLabel">Edicion de producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modal-content">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <jsp:include page="modalNewProduct.jsp"></jsp:include>
+        <jsp:include page="modaRegistarProducto.jsp"></jsp:include>
             <!-- bootStrap -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

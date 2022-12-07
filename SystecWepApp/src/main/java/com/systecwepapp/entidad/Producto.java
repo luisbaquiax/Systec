@@ -5,11 +5,13 @@
  */
 package com.systecwepapp.entidad;
 
+import java.io.Serializable;
+
 /**
  *
  * @author luis
  */
-public class Producto {
+public class Producto implements Serializable{
 
     private String codigo;
     private String nombre;

@@ -27,40 +27,38 @@
             <div class="container mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <section id="actions" class="mb-4 bg-light">
-                            <div class="container">
-                                <form method="POST" action="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=registro">
-                                <div class="row">
-                                    <h1 class="text-center"> Registrar producto</h1>
-                                    <h2 class="mt-3">${registroProduct}</h2>
-                                </div>
-                                <div class="row g-3 mt-1">
-                                    <div class="col">
-                                        <label for="exampleDataList" class="form-label">Productos</label>
-                                        <input name="codigoProducto" required="" class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Búsque el producto...">
-                                        <datalist id="datalistOptions">
-                                            <c:forEach items="${productos}" var="producto">
-                                                <option value="${producto.codigo}"/>
-                                            </c:forEach>
-                                        </datalist>
-                                    </div>
-                                    <div class="col">
-                                        <label for="exampleDataList" class="form-label">Cantidad a registrar</label>
-                                        <input name="unidades" required="" type="number"
-                                               class="form-control" placeholder="Unidades" value="1" min="1" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="col col-md-3">
-                                        <br>
-                                        <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-save"></i> Guardar cambios</button>
-                                    </div>
-                                    <div class="col col-md-1">
-                                        <br>
-                                        <a href="${pageContext.request.contextPath}/DescargaExcelRegistroProductos?tarea=hola" 
-                                           class="btn btn-success btn-block w-100" ><i class="fas fa-table"> Excel</i></a>
-                                    </div>
-                                </div>
-                            </form>
+                        <section id="actions" class="bg-light">
+                            <div class="row">
+                                <h1 class="text-center"> Registrar producto</h1>
+                                <h2 class="mt-3">${registroProduct}</h2>
                         </div>
+                        <form method="POST" action="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=consulta">
+                            <div class="row g-3 mt-1">
+                                <div class="col">
+                                    <br>
+                                    <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#modalRegistarProducto">
+                                        <i class="fas fa-list-ul"></i> Registrar productos
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <label for="exampleDataList" class="form-label">Fecha 1</label>
+                                    <input name="fecha1" required="" type="date"class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="exampleDataList" class="form-label">Fecha 2</label>
+                                    <input name="fecha2" required="" type="date"class="form-control">
+                                </div>
+                                <div class="col col-md-3">
+                                    <br>
+                                    <button class="btn btn-primary btn-block mt-2" type="submit"><i class="fas fa-search"></i> Hacer consulta</button>
+                                </div>
+                                <div class="col col-md-1">
+                                    <br>
+                                    <a href="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=descargarRegistros" 
+                                       class="btn btn-success btn-block w-100 mt-2" ><i class="fas fa-table"> Excel</i></a>
+                                </div>
+                            </div>
+                        </form>
                     </section>
                 </div>
                 <div class="card-body">
@@ -91,14 +89,15 @@
                 </div>
             </div>
         </div>
-        <!-- Option 1: Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <!-- dataTables-->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
-        <script src="../assets/js/dataTables.js" type="text/javascript"></script>
-    </body>
-</html>
+        <jsp:include page="modaRegistarProducto.jsp"></jsp:include>
+            <!-- Option 1: Bootstrap Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+            <!-- dataTables-->
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+            <script src="../assets/js/dataTables.js" type="text/javascript"></script>
+        </body>
+    </html>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.addHeader("Pragma", "no-cache");

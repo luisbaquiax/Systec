@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col">
                                         <br>
-                                        <button class="btn btn-primary">Realizar consulta</button>
+                                        <button class="btn btn-primary mt-2">Realizar consulta</button>
                                     </div>
                                 </div>
                             </form>

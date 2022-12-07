@@ -11,9 +11,12 @@ import com.systecwepapp.dataBase.modelo.ProductoDB;
 import com.systecwepapp.entidad.Compra;
 import com.systecwepapp.entidad.Inventario;
 import com.systecwepapp.entidad.Producto;
+import com.systecwepapp.reporte.ReporteRegistroProductos;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -32,11 +35,17 @@ public class ServletRegistroProducto extends HttpServlet {
     private ProductoDB productoDB;
     private CompraDB compraDB;
     private InventarioDB inventarioDB;
+    private ControlProductos controlProductos;
+    private List<Compra> compras;
+    private ReporteRegistroProductos registroProductos;
 
     public ServletRegistroProducto() {
         this.productoDB = new ProductoDB();
         this.compraDB = new CompraDB();
         this.inventarioDB = new InventarioDB();
+        this.controlProductos = new ControlProductos();
+        this.compras = new ArrayList<>();
+        this.registroProductos = new ReporteRegistroProductos();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,6 +64,9 @@ public class ServletRegistroProducto extends HttpServlet {
         switch (tarea) {
             case "registrarProducto":
                 registrarProducto(request, response);
+                break;
+            case "descargarRegistros":
+                descargarRegistros(request, response);
                 break;
             default:
         }
@@ -76,13 +88,18 @@ public class ServletRegistroProducto extends HttpServlet {
             case "registro":
                 registrar(request, response);
                 break;
+            case "consulta":
+                consultarRegistroProductos(request, response);
+                break;
             default:
         }
     }
 
     private void registrarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            request.getSession().setAttribute("registros", this.compraDB.getCompras());
+            request.getSession().setAttribute("productos", this.productoDB.getProductosTodaInformacion());
+            this.compras = this.compraDB.getCompras();
+            request.getSession().setAttribute("registros", compras);
             response.sendRedirect(request.getContextPath() + "/JSP/compra.jsp");
         } catch (SQLException ex) {
             Logger.getLogger(ServletRegistroProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,11 +110,11 @@ public class ServletRegistroProducto extends HttpServlet {
         try {
             String codigoProducto = request.getParameter("codigoProducto");
             int unidades = Integer.parseInt(request.getParameter("unidades"));
-            
+
             request.getSession().setAttribute("registroProduct", "Producto registrado exitosamente.");
-            
+
             this.compraDB.insert(new Compra(codigoProducto, LocalDate.now().toString(), unidades));
-            
+
             Producto buscado = this.productoDB.getProducto(codigoProducto);
             buscado.setCantidadExistente(buscado.getCantidadExistente() + unidades);
             this.inventarioDB.actualizarInventario(new Inventario(codigoProducto, buscado.getCantidadExistente()));
@@ -106,6 +123,26 @@ public class ServletRegistroProducto extends HttpServlet {
             request.getSession().setAttribute("registroProduct", "No se pudo hacer el registro.");
         }
         registrarProducto(request, response);
+    }
+
+    private void consultarRegistroProductos(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String fech1 = request.getParameter("fecha1");
+            String fech2 = request.getParameter("fecha2");
+            this.compras = this.compraDB.getCompras(fech1, fech2);
+            request.getSession().setAttribute("registros", compras);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        response.sendRedirect(request.getContextPath() + "/JSP/compra.jsp");
+    }
+
+    private void descargarRegistros(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String ruta = "registrados.xlsm";
+        System.out.println("hola registrados");
+        List<Compra> compras = (List<Compra>) request.getSession().getAttribute("registros");
+        this.registroProductos.escribirReporeProductosRegistrados(compras, ruta);
+        response.sendRedirect(request.getContextPath() + "/DowloadRegistroProductos?rutaRegistros=" + ruta);
     }
 
 }
