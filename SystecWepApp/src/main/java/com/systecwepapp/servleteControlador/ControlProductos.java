@@ -178,6 +178,9 @@ public class ControlProductos extends HttpServlet {
         if (request.getSession().getAttribute("msjeNuevoProducto") != null) {
             request.getSession().removeAttribute("msjeNuevoProducto");
         }
+        if (request.getSession().getAttribute("registroProduct") != null) {
+            request.getSession().removeAttribute("registroProduct");
+        }
     }
 
     private void descargarProductosExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {

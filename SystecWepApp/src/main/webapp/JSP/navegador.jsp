@@ -16,10 +16,12 @@
                     <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/ControlVentas?tarea=nuevaVenta">Nueva venta</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/ControlVentas?tarea=ventas">Ventas</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ControlVentas?tarea=ventas">Reporte de ventas</a>
                 <li class="nav-item dropdown">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/ControlProductos?tarea=productos">Productos</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=registrarProducto">Registro de productos</a>
             </ul>
             <div class="col-md-3 mr-3">
                 <a href="${pageContext.request.contextPath}/Salir" class="btn btn-ligth btn-block btn-primary">

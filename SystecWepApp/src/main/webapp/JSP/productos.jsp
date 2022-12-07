@@ -77,27 +77,11 @@
                                     <td><fmt:formatNumber value="${producto.precioUnitario}" type="currency"/></td>
                                     <c:if test="${producto.cantidadExistente > 0}" >
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=aumentarProducto&codigo=${producto.codigo}"
-                                               class="btn btn-success">
-                                                <i class="fas fa-angle-up"></i> 
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=disminuirProducto&codigo=${producto.codigo}"
-                                               class="btn btn-danger mr-3">
-                                                <i class="fas fa-angle-down"></i> 
-                                            </a>
                                             ${producto.cantidadExistente}
                                         </td>
                                     </c:if>
                                     <c:if test="${producto.cantidadExistente <=0}">
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=aumentarProducto&codigo=${producto.codigo}"
-                                               class="btn btn-success">
-                                                <i class="fas fa-angle-up"></i> 
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/ControlProductos?tarea=disminuirProducto&codigo=${producto.codigo}"
-                                               class="btn btn-danger mr-3">
-                                                <i class="fas fa-angle-down"></i>
-                                            </a>
                                             Agotado
                                         </td>
                                     </c:if>

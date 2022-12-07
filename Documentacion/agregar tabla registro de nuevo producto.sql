@@ -1,0 +1,9 @@
+use systec;
+CREATE TABLE IF NOT EXISTS compra(
+	id INT AUTO_INCREMENT NOT NULL,
+    producto VARCHAR(45) NOT NULL,
+    fecha DATE NOT NULL,
+    unidades INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(producto) REFERENCES producto(codigo) ON UPDATE CASCADE ON DELETE CASCADE
+);
