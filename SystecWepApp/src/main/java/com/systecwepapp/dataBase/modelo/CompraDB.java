@@ -21,6 +21,7 @@ public class CompraDB {
     private static final String UPDATE = "UPDATE compra SET unidades=? WHERE producto=?";
     private static final String SELECT = "SELECT * FROM compra";
     private static final String SELECT_BY_FECHA = "SELECT * FROM compra WHERE fecha BETWEEN ? AND ?";
+    private static final String DELETE = "DELETE FROM compra WHERE id=?";
     private Connection conn = null;
     private PreparedStatement statement = null;
     private ResultSet resultSet = null;
@@ -49,6 +50,18 @@ public class CompraDB {
         statement = conn.prepareStatement(UPDATE);
         statement.setInt(1, compra.getUnidades());
         statement.setString(2, compra.getProducto());
+        statement.executeUpdate();
+    }
+
+    /**
+     *
+     * @param compra
+     * @throws SQLException
+     */
+    public void delete(Compra compra) throws SQLException {
+        conn = ConeccionDB.getConeccion();
+        statement = conn.prepareStatement(DELETE);
+        statement.setInt(1, compra.getId());
         statement.executeUpdate();
     }
 

@@ -63,10 +63,13 @@ public class ServletRegistroProducto extends HttpServlet {
         String tarea = request.getParameter("tarea");
         switch (tarea) {
             case "registrarProducto":
-                registrarProducto(request, response);
+                redirigirCompras(request, response);
                 break;
             case "descargarRegistros":
                 descargarRegistros(request, response);
+                break;
+            case "cancelar":
+                cancelar(request, response);
                 break;
             default:
         }
@@ -95,7 +98,7 @@ public class ServletRegistroProducto extends HttpServlet {
         }
     }
 
-    private void registrarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void redirigirCompras(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             request.getSession().setAttribute("productos", this.productoDB.getProductosTodaInformacion());
             this.compras = this.compraDB.getCompras();
@@ -111,18 +114,18 @@ public class ServletRegistroProducto extends HttpServlet {
             String codigoProducto = request.getParameter("codigoProducto");
             int unidades = Integer.parseInt(request.getParameter("unidades"));
 
-            request.getSession().setAttribute("registroProduct", "Producto registrado exitosamente.");
-
             this.compraDB.insert(new Compra(codigoProducto, LocalDate.now().toString(), unidades));
 
             Producto buscado = this.productoDB.getProducto(codigoProducto);
             buscado.setCantidadExistente(buscado.getCantidadExistente() + unidades);
             this.inventarioDB.actualizarInventario(new Inventario(codigoProducto, buscado.getCantidadExistente()));
+            request.getSession().setAttribute("registroProduct", "Producto registrado exitosamente.");
+
         } catch (SQLException | NumberFormatException ex) {
             System.out.println(ex.getMessage());
             request.getSession().setAttribute("registroProduct", "No se pudo hacer el registro.");
         }
-        registrarProducto(request, response);
+        redirigirCompras(request, response);
     }
 
     private void consultarRegistroProductos(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -143,6 +146,40 @@ public class ServletRegistroProducto extends HttpServlet {
         compras = (List<Compra>) request.getSession().getAttribute("registros");
         this.registroProductos.escribirReporeProductosRegistrados(compras, ruta);
         response.sendRedirect(request.getContextPath() + "/DowloadRegistroProductos?rutaRegistros=" + ruta);
+    }
+
+    private void cancelar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            int idRegistro = Integer.parseInt(request.getParameter("id"));
+            List<Compra> registrados = this.compraDB.getCompras();
+            Compra aux = null;
+            for (int i = 0; i < registrados.size(); i++) {
+                if (registrados.get(i).getId() == idRegistro) {
+                    aux = registrados.get(i);
+                    break;
+                }
+            }
+            if (aux != null) {
+                List<Inventario> lista = this.inventarioDB.getInventarioProducts();
+                Inventario auxiInventario = null;
+                for (int i = 0; i < lista.size(); i++) {
+                    if (aux.getProducto().equals(lista.get(i).getCodigoProducto())) {
+                        auxiInventario = lista.get(i);
+                        break;
+                    }
+                }
+                if (auxiInventario != null) {
+                    auxiInventario.setCantidadExistente(auxiInventario.getCantidadExistente() - aux.getUnidades());
+                    this.inventarioDB.actualizarInventario(auxiInventario);
+                    this.compraDB.delete(aux);
+                }
+            }
+            request.getSession().setAttribute("registroProduct", "Registro cancelado exitosamente.");
+        } catch (SQLException | NumberFormatException | NullPointerException ex) {
+            request.getSession().setAttribute("registroProduct", "No se pudo hacer la acción.");
+            Logger.getLogger(ServletRegistroProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        redirigirCompras(request, response);
     }
 
 }

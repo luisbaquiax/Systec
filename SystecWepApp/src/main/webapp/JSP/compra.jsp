@@ -80,7 +80,7 @@
                                     <td>${c.fecha}</td>
                                     <td>${c.unidades}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=candelar&id=${c.id}" 
+                                        <a href="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=cancelar&id=${c.id}" 
                                            class="btn btn-danger" ><i class="fas fa-trash-alt"></i> Cancelar</a>
                                     </td>
                                 </tr>

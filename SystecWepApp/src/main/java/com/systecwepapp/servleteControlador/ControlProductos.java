@@ -60,12 +60,6 @@ public class ControlProductos extends HttpServlet {
             case "editProduct":
                 redirigirEditarProducto(request, response);
                 break;
-            case "aumentarProducto":
-                aumentarPrducto(request, response);
-                break;
-            case "disminuirProducto":
-                disminuirProducto(request, response);
-                break;
             case "descargarProductosExcel":
                 descargarProductosExcel(request, response);
                 break;
@@ -135,26 +129,6 @@ public class ControlProductos extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/JSP/modalEditProducto.jsp");
     }
 
-    private void aumentarPrducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String codigo = request.getParameter("codigo");
-        Producto buscado = this.productoDB.getProducto(codigo);
-        this.inventarioDB.actualizarInventario(new Inventario(buscado.getCodigo(), buscado.getCantidadExistente() + 1));
-        redirigirAProductos(request, response);
-    }
-
-    private void disminuirProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String codigo = request.getParameter("codigo");
-        Producto buscado = this.productoDB.getProducto(codigo);
-        if (buscado.getCantidadExistente() <= 0) {
-            request.setAttribute("msje", "Ya no se puede disminuir más.");
-            request.getRequestDispatcher("JSP/productos.jsp").forward(request, response);
-        } else {
-            this.inventarioDB.actualizarInventario(new Inventario(buscado.getCodigo(), buscado.getCantidadExistente() - 1));
-            redirigirAProductos(request, response);
-
-        }
-    }
-
     private void editarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int cantidadDeExistencia = Integer.parseInt(request.getParameter("cantidadExistente"));
         String codigoProducto = request.getParameter("codigo");
@@ -188,7 +162,7 @@ public class ControlProductos extends HttpServlet {
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("productos");
         ReporteProductos reporteProductos = new ReporteProductos();
         reporteProductos.escribirReporteProductosCSV(productos, ruta);
-        
+
         response.sendRedirect(request.getContextPath() + "/DescargaListaProductosExcel?rutaProductos=" + ruta);
     }
 }

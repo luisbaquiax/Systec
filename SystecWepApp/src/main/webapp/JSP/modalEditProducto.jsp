@@ -24,11 +24,6 @@
             <div class="row">
                 <section>
                     <div class="container">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary btn-block text-center w-100">
-                                <i class="fas fa-check"></i> Guardar cambios
-                            </button>
-                        </div>
                         <div class="row">
                             <div class="col">
                                 <div class="card-header">
@@ -50,6 +45,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary btn-block text-center w-100">
+                                <i class="fas fa-check"></i> Guardar cambios
+                            </button>
                         </div>
                     </div>
                 </section>
