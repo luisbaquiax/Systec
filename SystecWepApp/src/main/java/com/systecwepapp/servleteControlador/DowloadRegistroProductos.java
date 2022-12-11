@@ -35,8 +35,8 @@ public class DowloadRegistroProductos extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getParameter("rutaRegistros");
         try (BufferedInputStream fileStream = new BufferedInputStream(new FileInputStream(path))) {
-            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8");
-            response.setHeader("Content-disposition", "attachment; filename=Productos registrados.xlsx");
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-disposition", "attachment; filename=Productos registrados.xls");
             int data = fileStream.read();
             while (data > -1) {
                 response.getOutputStream().write(data);
