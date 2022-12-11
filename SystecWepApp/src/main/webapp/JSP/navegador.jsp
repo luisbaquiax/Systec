@@ -21,7 +21,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/ControlProductos?tarea=productos">Productos</a>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=registrarProducto">Registro de productos</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ServletRegistroProducto?tarea=registrarProducto">Reporte de productos</a>
             </ul>
             <div class="col-md-3 mr-3">
                 <a href="${pageContext.request.contextPath}/Salir" class="btn btn-ligth btn-block btn-primary">

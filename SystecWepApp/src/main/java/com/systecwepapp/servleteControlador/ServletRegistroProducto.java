@@ -141,7 +141,7 @@ public class ServletRegistroProducto extends HttpServlet {
     }
 
     private void descargarRegistros(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String ruta = "registrados.xlsm";
+        String ruta = "registrados.xlsx";
         System.out.println("hola registrados");
         compras = (List<Compra>) request.getSession().getAttribute("registros");
         this.registroProductos.escribirReporeProductosRegistrados(compras, ruta);
