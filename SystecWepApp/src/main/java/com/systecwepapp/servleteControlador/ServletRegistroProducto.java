@@ -144,7 +144,7 @@ public class ServletRegistroProducto extends HttpServlet {
         String ruta = "registrados.xlsx";
         System.out.println("hola registrados");
         compras = (List<Compra>) request.getSession().getAttribute("registros");
-        this.registroProductos.escribirReporeProductosRegistrados(compras, ruta);
+        this.registroProductos.writeExcel(compras, ruta);
         response.sendRedirect(request.getContextPath() + "/DowloadRegistroProductos?rutaRegistros=" + ruta);
     }
 

@@ -5,27 +5,26 @@
  */
 package com.systecwepapp.servleteControlador;
 
-import com.systecwepapp.entidad.Producto;
-import com.systecwepapp.entidad.Venta;
-import com.systecwepapp.reporte.ReporteProductos;
+import static com.sun.org.apache.xerces.internal.util.FeatureState.is;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 /**
  *
- * @author Luis
+ * @author luis
  */
-@WebServlet(name = "DescargaListaProductosExcel", urlPatterns = {"/DescargaListaProductosExcel"})
-public class DescargaListaProductosExcel extends HttpServlet {
+@WebServlet(name = "DescargaVentasExcel", urlPatterns = {"/DescargaVentasExcel"})
+public class DescargaVentasExcel extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,10 +38,10 @@ public class DescargaListaProductosExcel extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = request.getParameter("rutaProductos");
+        String path = request.getParameter("ruta");
         try (BufferedInputStream fileStream = new BufferedInputStream(new FileInputStream(path))) {
-            response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=Listado de productos.xlsx");
+            response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response.setHeader("Content-disposition", "attachment; filename=reporte.xlsx");
             int data = fileStream.read();
             while (data > -1) {
                 response.getOutputStream().write(data);

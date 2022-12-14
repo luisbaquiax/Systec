@@ -41,7 +41,7 @@
                                         <input name="codigoProducto" required="" class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Búsque el producto...">
                                         <datalist id="datalistOptions">
                                             <c:forEach items="${productos}" var="producto">
-                                                <option value="${producto.codigo}, ${producto.nombre}"/>
+                                                <option value="${producto.codigo}"/>
                                             </c:forEach>
                                         </datalist>
                                     </div>

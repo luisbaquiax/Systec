@@ -158,11 +158,10 @@ public class ControlProductos extends HttpServlet {
     }
 
     private void descargarProductosExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String ruta = "rutaProductos.csv";
+        String ruta = "rutaProductos.xlsx";
         List<Producto> productos = (List<Producto>) request.getSession().getAttribute("productos");
         ReporteProductos reporteProductos = new ReporteProductos();
-        reporteProductos.escribirReporteProductosCSV(productos, ruta);
-
+        reporteProductos.escribirExcelProductos(productos, ruta);
         response.sendRedirect(request.getContextPath() + "/DescargaListaProductosExcel?rutaProductos=" + ruta);
     }
 }

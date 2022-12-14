@@ -309,11 +309,11 @@ public class ControlVentas extends HttpServlet {
     }
 
     private void escribirReporteExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String ruta = "reporteSystec.csv";
+        String ruta = "reporteSystec.xlsx";
         List<Venta> ventas = (List<Venta>) request.getSession().getAttribute("ventas");
-        this.manejadorReporteVentas.escribirReporteCSV(ventas, ruta);
+        this.manejadorReporteVentas.writeReportExcel(ventas, ruta);
         request.getSession().setAttribute("ruta", ruta);
-        response.sendRedirect(request.getContextPath() + "/Descarga?ruta=" + ruta);
+        response.sendRedirect(request.getContextPath() + "/DescargaVentasExcel?ruta=" + ruta);
     }
 
     private void descargarExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {

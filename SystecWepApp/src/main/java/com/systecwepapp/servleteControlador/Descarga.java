@@ -41,7 +41,7 @@ public class Descarga extends HttpServlet {
         String path = request.getParameter("ruta");
         try (BufferedInputStream fileStream = new BufferedInputStream(new FileInputStream(path))) {
             response.setContentType("text/plain;charset=UTF-8");
-            response.setHeader("Content-disposition", "attachment; filename=reporte.CSV");
+            response.setHeader("Content-disposition", "attachment; filename=reporte.csv");
             int data = fileStream.read();
             while (data > -1) {
                 response.getOutputStream().write(data);
